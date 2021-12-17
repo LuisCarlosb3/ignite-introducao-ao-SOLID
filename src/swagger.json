@@ -1,0 +1,340 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MyManager",
+    "description": "Documentation for MyManager API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333",
+      "description": "URL for API"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Create new user",
+        "requestBody": {
+          "required": true,
+          "description": "Fields for create new user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                },
+                "example": {
+                  "application/json": {
+                    "name": "Jhon Doe",
+                    "email": "jhondoe@email.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "example": "1c39eb9e-403c-499e-9bb6-9b7c705c8a7b"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Jhon Doe"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "jhondoe@email.com"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2021-12-17T01:13:00.99wz"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2021-12-17T01:13:00.99wz"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Email jhondoe@email.com already exists"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "users"
+        ], 
+        "summary": "Return users list",
+        "description": "Return users list when user sessing is an admin",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users listed with success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "admin": {
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "1c39eb9e-403c-499e-9bb6-9b7c705c8a7b"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Jhon Doe"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "jhondoe@email.com"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-12-17T01:13:00.99wz"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-12-17T01:13:00.99wz"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User not allowed to list users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User not allowed to list users"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Returns users profile data",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User profile information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "example": "1c39eb9e-403c-499e-9bb6-9b7c705c8a7b"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Jhon Doe"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "jhondoe@email.com"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2021-12-17T01:13:00.99wz"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2021-12-17T01:13:00.99wz"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Update user permission to admin",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "example": "1c39eb9e-403c-499e-9bb6-9b7c705c8a7b"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Jhon Doe"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "jhondoe@email.com"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2021-12-17T01:13:00.99wz"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2021-12-17T01:13:00.99wz"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "User not found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
